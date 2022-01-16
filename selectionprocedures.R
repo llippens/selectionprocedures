@@ -55,7 +55,7 @@ sackett_p_ord %>%
   ggplot(mapping = aes(x = 1, y = p)) +
   scale_y_reverse(limits = c(.42, 0), breaks = NULL) +
   scale_x_continuous(limits = c(1, 1.1)) +
-  geom_text(aes(label = selection_procedure), hjust = 0, nudge_x = .003, nudge_y = .003,
+  geom_text(aes(label = selection_procedure), hjust = 0, nudge_x = .002, nudge_y = .004,
             family = "Source Sans Pro",
             colour = "gray20", angle = 30) +
   geom_point(size = 2, colour = blue) +
@@ -66,7 +66,7 @@ sackett_p_ord %>%
         text = element_text(family = "Source Sans Pro", size = 10, colour = "gray20"),
         axis.title = element_blank(),
         axis.text = element_blank(),
-        plot.margin = margin(t = 0, r = 0, b = 100, l =0, unit = "pt"))
+        plot.margin = margin(t = 0, r = 0, b = 10, l =0, unit = "pt"))
 cover
 
 
