@@ -2,7 +2,7 @@
 #source(paste0(here::here(), "/selectionprocedures.R"))
 
 # 1. Save images ####
-png(paste0(dir, "/img/", "cover image.png"), width = 40, height = 40/3.56, units = "cm", res = 500)
+png(paste0(dir, "/img/", "cover image.png"), width = 40, height = 40/1.78, units = "cm", res = 500)
 cover
 dev.off()
 
@@ -18,6 +18,6 @@ png(paste0(dir, "/img/", "sackett_p_uncertainty.png"), width = 20, height = 20, 
 sackett.pci
 dev.off()
 
-png(paste0(dir, "/img/", "sackett_p_bw_d.png"), width = 25, height = 20, units = "cm", res = 300)
+png(paste0(dir, "/img/", "sackett_p_bw_d.png"), width = 25, height = 25, units = "cm", res = 300)
 sackett.p.bwd
 dev.off()
