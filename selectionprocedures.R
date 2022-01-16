@@ -1,17 +1,19 @@
-# Libraries
+# 0. Setup ####
+## 0.1. Libraries ####
 library(tidyverse)
 library(ggplot2)
 library(ggrepel)
 
-# Install and load appropriate fonts
+## 0.2. Install and load selected fonts ####
 #sysfonts::font_add_google("Source Sans Pro")
 windowsFonts("Source Sans Pro" = windowsFont("Source Sans Pro"))
 
-# Colours
+## 0.3. Colours
 blue <- "#1E64C8"
 lgrey <- "#A6A6A6"
 
-# Data read-in
+
+# 1. Data ####
 dir <- here::here()
 
 sackett <- 
@@ -27,7 +29,8 @@ sackett_bw_d_ord <-
   readxl::read_xlsx(paste0(dir, "/data/", "Sackett et al_2021_bw_d.xlsx")) %>%
   type_convert() %>% janitor::clean_names()
 
-# Data transformation
+
+# 2. Data transformation ####
 order_sp <-
   sackett %>%
   arrange(lower90_p) %>%
@@ -44,7 +47,9 @@ order_c <-
 
 sackett$category <- factor(sackett$category, levels = order_c)
 
-# Cover image
+
+# 3. Visuals ####
+## 3.1. Cover image ####
 cover <-
 sackett_p_ord %>%
   ggplot(mapping = aes(x = 1, y = p)) +
@@ -52,9 +57,7 @@ sackett_p_ord %>%
   scale_x_continuous(limits = c(1, 1.1)) +
   geom_text(aes(label = selection_procedure), hjust = 0, nudge_x = .003, nudge_y = .003,
             family = "Source Sans Pro",
-            colour = "gray20", angle = 30,
-            #segment.colour = "gray60", segment.size = .25, min.segment.length = 99
-  ) +
+            colour = "gray20", angle = 30) +
   geom_point(size = 2, colour = blue) +
   coord_flip() +
   theme_minimal() +
@@ -67,7 +70,8 @@ sackett_p_ord %>%
 cover
 
 
-# Uni-dimensional graphs
+## 3.2. Uni-dimensional graphs ####
+### 3.2.1. Operational validity estimates ####
 sackett.p <-
 sackett_p_ord %>%
   ggplot(mapping = aes(x = 1, y = p)) +
@@ -110,7 +114,7 @@ sackett_p_ord %>%
         )
 sackett.p
 
-
+### 3.2.2. Black-White mean differences ####
 sackett.bwd <-
 sackett_bw_d_ord %>%
   ggplot(mapping = aes(x = 1, y = bw_d)) +
@@ -154,8 +158,7 @@ sackett_bw_d_ord %>%
   )
 sackett.bwd
 
-
-# Selection procedure graph
+## 3.3. Uncertainty around validity estimates ####
 sackett.pci <-
 sackett %>% filter(include == 1) %>%
   ggplot(mapping = aes(x = selection_procedure, y = p_sackett_etal_2021)) +
@@ -212,11 +215,9 @@ sackett %>% filter(include == 1) %>%
         )
 sackett.pci
 
-
-# Trade-off graph validity and adverse impact
+## 3.4. Trade-off between validity and adverse impact potential ####
 sackett.p.bwd <-
-sackett %>% filter(#include == 1,
-                   !is.na(bw_d)) %>%
+sackett %>% filter(!is.na(bw_d)) %>%
   ggplot(mapping = aes(x = p_sackett_etal_2021, y = bw_d)) +
   geom_smooth(formula = "y ~ x", method = "lm",
               colour = "gray80", fill = "gray90", size = .75) +
@@ -251,7 +252,6 @@ sackett %>% filter(#include == 1,
                   family = "Source Sans Pro", colour = "gray20",
                   segment.colour = "gray60", segment.size = .25,
                   min.segment.length = 99, box.padding = .4, nudge_y = .005, nudge_x = -.001) +
-  #geom_point(size = 3.5, colour = "white") +
   geom_point(mapping = aes(colour = category), size = 3) +
   scale_colour_manual(values = viridisLite::mako(n = sackett$category %>% unique() %>% length())) +
   scale_x_continuous(limits = c(.05, .45), breaks = c(0.05, seq(.15,.35,.10), .42),

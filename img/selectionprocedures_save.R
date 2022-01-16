@@ -1,7 +1,7 @@
-# Source R file
+# 0. Source R file ####
 #source(paste0(here::here(), "/selectionprocedures.R"))
 
-# Save images
+# 1. Save images ####
 png(paste0(dir, "/img/", "cover image.png"), width = 40, height = 40/1.78, units = "cm", res = 500)
 cover
 dev.off()
